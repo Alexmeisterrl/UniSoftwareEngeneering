@@ -1,4 +1,4 @@
-Repository von Leon Schirra
+Repository von Alexander Leonardo Kolb,
 
 Uebung1 Antworten:
 
