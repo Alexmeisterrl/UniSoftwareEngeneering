@@ -1,4 +1,4 @@
-Repository von Alexander Leonardo Kolb,
+Repository von Alexander Leonardo Kolb
 
 Uebung1 Antworten:
 
