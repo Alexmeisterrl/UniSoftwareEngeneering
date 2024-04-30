@@ -1,6 +1,8 @@
 package Ue2;
 
-public interface PersonCard {
+import java.io.Serializable;
+
+public interface PersonCard extends Serializable{
     public String getFirstName();
     public String getLastName();
     

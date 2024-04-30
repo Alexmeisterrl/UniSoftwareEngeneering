@@ -1,13 +1,26 @@
 package Ue2;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 class CardBox {
     private List<PersonCard> cards;
+    private static CardBox instance;
 
-    public CardBox() {
+    private CardBox() {
         cards = new ArrayList<>();
+    }
+
+    public static CardBox getInstance() {
+        if (instance == null) {
+            instance = new CardBox();
+        }
+        return instance;
     }
 
     public void addPersonCard(PersonCard personCard) throws CardBoxException {
@@ -41,7 +54,30 @@ class CardBox {
         }
     }
 
+    public void save() throws CardboxStorageException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("cardbox.dat"))) {
+            oos.writeObject(cards);
+        } catch (IOException e) {
+            throw new CardboxStorageException("Fehler beim Speichern der CardBox: " + e.getMessage(), e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void load() throws CardboxStorageException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("cardbox.dat"))) {
+            cards = (List<PersonCard>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new CardboxStorageException("Fehler beim Laden der CardBox: " + e.getMessage(), e);
+        }
+    }
+
+    public List<PersonCard> getCurrentList() {
+        return new ArrayList<>(cards);
+    }
+
     public int size() {
         return cards.size();
     }
+
+
 }
